@@ -2,9 +2,6 @@ trigger:
   branches:
     include:
     - main
-  paths:
-    include:
-    - 2023/03-monolib-deploy/*
 
 pool:
   vmImage: ubuntu-latest
@@ -15,14 +12,13 @@ variables:
 steps:
 - task: Cache@2
   inputs:
-    key: 'npm | "$(Agent.OS)" | ./2023/03-monolib-deploy/package-lock.json'
+    key: 'npm | "$(Agent.OS)" | package-lock.json'
     restoreKeys: |
        npm | "$(Agent.OS)"
     path: $(npm_config_cache)
   displayName: Cache npm
 
 - script: npm ci
-  workingDirectory: ./2023/03-monolib-deploy
 # - script: cd ./2023/03-monolib-deploy && npm run lint:lg
 #   env:
 #     BACKFILL_CACHE_PROVIDER: $(BACKFILL_CACHE_PROVIDER)
